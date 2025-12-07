@@ -134,7 +134,7 @@ export const ProjectsCarousel = () => {
       className="section-padding min-h-screen flex flex-col items-center justify-center overflow-hidden"
     >
       {/* Section Header */}
-      <div className="text-center mb-20" data-aos="fade-up">
+      <div className="text-center mb-5" data-aos="fade-up">
         <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
           Portfolio
         </span>
@@ -149,9 +149,40 @@ export const ProjectsCarousel = () => {
         data-aos="zoom-in"
         data-aos-delay="200"
       >
+        {/* Navigation Arrows */}
+        <button
+          onClick={goToPrev}
+          className={cn(
+            "absolute left-0 top-1/2 -translate-y-1/2 z-10",
+            "flex items-center justify-center w-12 h-12 rounded-full",
+            "border border-border text-muted-foreground",
+            "hover:bg-accent hover:text-foreground transition-all duration-300",
+            "bg-background/80 backdrop-blur-sm"
+          )}
+          data-aos="fade-right"
+          data-aos-delay="400"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+
+        <button
+          onClick={goToNext}
+          className={cn(
+            "absolute right-0 top-1/2 -translate-y-1/2 z-10",
+            "flex items-center justify-center w-12 h-12 rounded-full",
+            "border border-border text-muted-foreground",
+            "hover:bg-accent hover:text-foreground transition-all duration-300",
+            "bg-background/80 backdrop-blur-sm"
+          )}
+          data-aos="fade-left"
+          data-aos-delay="400"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+
         {/* Cards Container */}
         <div
-          className="relative h-[420px] md:h-[480px] flex items-center justify-center cursor-grab active:cursor-grabbing"
+          className="relative h-[420px] md:h-[480px] flex items-center justify-center cursor-grab active:cursor-grabbing px-16"
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
@@ -210,23 +241,9 @@ export const ProjectsCarousel = () => {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Navigation */}
-        <div className="flex items-center justify-center gap-6 mt-8" data-aos="fade-up" data-aos-delay="400">
-          <button
-            onClick={goToPrev}
-            className={cn(
-              "flex items-center justify-center w-10 h-10 rounded-full",
-              "border border-border text-muted-foreground",
-              "hover:bg-accent hover:text-foreground transition-all duration-300"
-            )}
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
 
           {/* Indicators */}
-          <div className="flex items-center gap-2">
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-8 flex items-center gap-2">
             {projects.map((_, index) => (
               <button
                 key={index}
@@ -240,17 +257,6 @@ export const ProjectsCarousel = () => {
               />
             ))}
           </div>
-
-          <button
-            onClick={goToNext}
-            className={cn(
-              "flex items-center justify-center w-10 h-10 rounded-full",
-              "border border-border text-muted-foreground",
-              "hover:bg-accent hover:text-foreground transition-all duration-300"
-            )}
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
         </div>
       </div>
     </section>

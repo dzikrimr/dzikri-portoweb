@@ -11,6 +11,7 @@ import { TechStackSection } from '@/components/TechStackSection';
 import { ProjectsCarousel } from '@/components/ProjectsCarousel';
 import { AboutSection } from '@/components/AboutSection';
 import { TimelineSection } from '@/components/TimelineSection';
+import { AchievementSection } from '@/components/AchievementSection';
 import { ContactSection } from '@/components/ContactSection';
 import { Footer } from '@/components/Footer';
 import { ThemeToggle } from '@/components/ThemeToggle';
@@ -80,6 +81,7 @@ const Index = () => {
             <ProjectsCarousel />
             <AboutSection />
             <TimelineSection />
+            <AchievementSection />
             <ContactSection />
           </main>
           <Footer />
