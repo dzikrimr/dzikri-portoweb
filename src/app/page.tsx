@@ -15,6 +15,7 @@ import { AchievementSection } from '@/components/AchievementSection';
 import { ContactSection } from '@/components/ContactSection';
 import { Footer } from '@/components/Footer';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { MobileMenu } from '@/components/MobileMenu';
 import { SplashScreen } from '@/components/SplashScreen';
 
 const Index = () => {
@@ -73,8 +74,13 @@ const Index = () => {
         <>
           <StarBackground />
           <FloatingNavbar />
-          <FloatingSocials />
-          <ThemeToggle />
+          <div className="hidden md:block">
+            <FloatingSocials />
+            <ThemeToggle />
+          </div>
+          <div className="md:hidden">
+            <MobileMenu />
+          </div>
           <main>
             <HeroSection />
             <TechStackSection />

@@ -108,7 +108,7 @@ export const FloatingNavbar = () => {
         {/* Mobile Menu Dropdown */}
         <div
           className={cn(
-            "absolute top-14 left-1/2 -translate-x-1/2 w-[calc(100vw-2rem)] max-w-xs",
+            "absolute top-14 left-1/2 -translate-x-1/2 w-[calc(100vw-4rem)] max-w-xs",
             "glass-panel rounded-xl",
             "transition-all duration-300 overflow-hidden",
             isMobileMenuOpen

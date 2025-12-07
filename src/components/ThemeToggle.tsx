@@ -7,8 +7,10 @@ import { Sun, Moon } from 'lucide-react';
 export const ThemeToggle = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isDark, setIsDark] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
     const stored = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const initialDark = stored ? stored === 'dark' : prefersDark;
@@ -28,15 +30,17 @@ export const ThemeToggle = () => {
   return (
     <div
       className={cn(
-        "fixed right-0 top-1/2 z-50 transition-all duration-700 ease-out",
-        isVisible ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
+        "fixed z-50 transition-all duration-700 ease-out",
+        isMobile ? "bottom-4 right-4" : "right-0 top-1/2",
+        isVisible ? "translate-x-0 opacity-100" : isMobile ? "translate-y-full opacity-0" : "translate-x-full opacity-0"
       )}
     >
       <button
         onClick={toggleTheme}
         className={cn(
-          "group flex items-center justify-center w-10 h-16 rounded-l-lg",
-          "bg-card/80 backdrop-blur-sm border-l border-t border-b border-border/40",
+          "group flex items-center justify-center rounded-lg",
+          isMobile ? "w-12 h-12" : "w-10 h-16 rounded-l-lg",
+          "bg-card/80 backdrop-blur-sm border border-border/40",
           "hover:bg-accent/50 transition-all duration-300",
           "hover:shadow-[0_0_15px_hsl(var(--foreground)/0.08)]"
         )}

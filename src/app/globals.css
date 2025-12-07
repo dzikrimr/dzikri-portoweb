@@ -159,14 +159,24 @@
     @apply border-border;
   }
 
-  html {
+html {
     scroll-behavior: smooth;
+    overflow-y: scroll; 
+    overflow-x: hidden; 
   }
 
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-mono);
     letter-spacing: -0.01em;
+    width: 100vw; 
+    overflow-x: hidden; 
+  }
+
+  @media (max-width: 767px) {
+    html, body {
+        overflow-x: hidden; 
+    }
   }
 
   h1,
@@ -447,3 +457,4 @@
   }
 }
 }
+
