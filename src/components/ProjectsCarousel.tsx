@@ -1,45 +1,34 @@
 "use client";
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import project1 from '@/assets/project-1.jpg';
-import project2 from '@/assets/project-2.jpg';
-import project3 from '@/assets/project-3.jpg';
-
-const projects = [
-  {
-    id: 1,
-    title: 'Analytics Dashboard',
-    description: 'A comprehensive data visualization platform with real-time analytics and intuitive user interface.',
-    image: project1,
-    tags: ['React', 'TypeScript', 'D3.js'],
-    link: '#',
-  },
-  {
-    id: 2,
-    title: 'Luxury E-Commerce',
-    description: 'Premium shopping experience for high-end fashion brands with seamless checkout flow.',
-    image: project2,
-    tags: ['Next.js', 'Stripe', 'Prisma'],
-    link: '#',
-  },
-  {
-    id: 3,
-    title: 'Creative Agency',
-    description: 'Bold and expressive portfolio website featuring dynamic animations and immersive storytelling.',
-    image: project3,
-    tags: ['React', 'GSAP', 'Three.js'],
-    link: '#',
-  },
-];
+import { getProjects } from '@/app/actions';
+import { Project } from '@/db/schema';
 
 export const ProjectsCarousel = () => {
+  const [projects, setProjects] = useState<Project[]>([]);
   const [currentIndex, setCurrentIndex] = useState(1);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getProjects();
+      setProjects(data);
+      // Set initial index to middle if possible, or 0
+      if (data.length > 0) {
+        setCurrentIndex(Math.floor(data.length / 2));
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (projects.length === 0) {
+    return null; // Or a loading spinner
+  }
 
   const goToNext = () => {
     setCurrentIndex((prev) => (prev + 1) % projects.length);

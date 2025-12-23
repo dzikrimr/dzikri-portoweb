@@ -16,17 +16,9 @@ import { ContactSection } from '@/components/ContactSection';
 import { Footer } from '@/components/Footer';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { MobileMenu } from '@/components/MobileMenu';
-import { SplashScreen } from '@/components/SplashScreen';
 
 const Index = () => {
-  const [splashShown, setSplashShown] = useState(false); 
-
   useEffect(() => {
-    const isPostSplashState = window.history.state?.postSplash;
-    if (!isPostSplashState) {
-      setSplashShown(false);
-    }
-
     window.scrollTo(0, 0);
 
     AOS.init({
@@ -38,61 +30,29 @@ const Index = () => {
       delay: 0,
       anchorPlacement: 'top-bottom',
     });
-
-    // Handle back navigation
-    const handlePopState = (event: PopStateEvent) => {
-      if (event.state?.postSplash) {
-        setSplashShown(true);
-      } else {
-        setSplashShown(false);
-      }
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
-
-  useEffect(() => {
-    if (splashShown) {
-      window.scrollTo(0, 0);
-      setTimeout(() => window.scrollTo(0, 0), 0);
-      setTimeout(() => window.scrollTo(0, 0), 100);
-      setTimeout(() => window.scrollTo(0, 0), 200);
-    }
-  }, [splashShown]);
-
-  const handleSplashComplete = () => {
-    setSplashShown(true);
-    window.history.replaceState({ postSplash: true }, '', window.location.pathname);
-    window.scrollTo(0, 0);
-  };
 
   return (
     <div className="min-h-screen bg-background transition-colors duration-300">
-      {!splashShown && <SplashScreen onComplete={handleSplashComplete} />}
-      {splashShown && (
-        <>
-          <StarBackground />
-          <FloatingNavbar />
-          <div className="hidden md:block">
-            <FloatingSocials />
-            <ThemeToggle />
-          </div>
-          <div className="md:hidden">
-            <MobileMenu />
-          </div>
-          <main>
-            <HeroSection />
-            <TechStackSection />
-            <ProjectsCarousel />
-            <AboutSection />
-            <TimelineSection />
-            <AchievementSection />
-            <ContactSection />
-          </main>
-          <Footer />
-        </>
-      )}
+      <StarBackground />
+      <FloatingNavbar />
+      <div className="hidden md:block">
+        <FloatingSocials />
+        <ThemeToggle />
+      </div>
+      <div className="md:hidden">
+        <MobileMenu />
+      </div>
+      <main>
+        <HeroSection />
+        <TechStackSection />
+        <ProjectsCarousel />
+        <AboutSection />
+        <TimelineSection />
+        <AchievementSection />
+        <ContactSection />
+      </main>
+      <Footer />
     </div>
   );
 };

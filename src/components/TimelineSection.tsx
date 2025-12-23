@@ -1,84 +1,18 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
-
-const experiences = [
-  {
-    year: '2023',
-    command: 'senior-developer',
-    title: 'Senior Developer',
-    company: 'Tech Innovations Inc.',
-    location: 'San Francisco, CA',
-    description: 'Leading frontend architecture and mentoring junior developers. Building scalable design systems and driving technical decisions across multiple product teams.',
-    output: [
-      'Led team of 8 engineers',
-      'Shipped 12 major features',
-      'Reduced load time by 40%',
-    ],
-    skills: ['React', 'TypeScript', 'System Design', 'Leadership'],
-  },
-  {
-    year: '2022',
-    command: 'lead-engineer',
-    title: 'Lead Engineer',
-    company: 'Digital Products Co.',
-    location: 'New York, NY',
-    description: 'Spearheaded product development for fintech solutions. Managed cross-functional teams and delivered enterprise-grade applications.',
-    output: [
-      'Managed $2M project budget',
-      'Built payment processing system',
-      'Achieved 99.9% uptime',
-    ],
-    skills: ['Node.js', 'AWS', 'PostgreSQL', 'Team Lead'],
-  },
-  {
-    year: '2021',
-    command: 'fullstack-dev',
-    title: 'Full Stack Developer',
-    company: 'Digital Agency Co.',
-    location: 'Austin, TX',
-    description: 'Built scalable applications for enterprise clients. Implemented CI/CD pipelines and optimized database performance for high-traffic systems.',
-    output: [
-      'Delivered 20+ client projects',
-      'Automated deployment pipeline',
-      'Improved API response by 60%',
-    ],
-    skills: ['Full Stack', 'Docker', 'CI/CD', 'MongoDB'],
-  },
-  {
-    year: '2019',
-    command: 'frontend-dev',
-    title: 'Frontend Developer',
-    company: 'Startup Labs',
-    location: 'Remote',
-    description: 'Developed user interfaces for early-stage products. Collaborated closely with designers to ship pixel-perfect, accessible experiences.',
-    output: [
-      'Built 5 MVPs from scratch',
-      'Established component library',
-      'Improved accessibility score to 98',
-    ],
-    skills: ['React', 'CSS', 'Figma', 'A11y'],
-  },
-  {
-    year: '2018',
-    command: 'init',
-    title: 'Junior Developer',
-    company: 'Web Solutions',
-    location: 'Boston, MA',
-    description: 'Started journey in web development and design. Learned fundamentals of modern JavaScript, responsive design, and version control.',
-    output: [
-      'Completed 100+ code reviews',
-      'First production deployment',
-      'Mentored by senior engineers',
-    ],
-    skills: ['JavaScript', 'HTML/CSS', 'Git', 'Agile'],
-  },
-];
+import { getExperiences } from '@/app/actions';
+import { Experience } from '@/db/schema';
 
 export const TimelineSection = () => {
+  const [experiences, setExperiences] = useState<Experience[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    getExperiences().then(setExperiences);
+  }, []);
 
   const handleCardClick = (index: number) => {
     setActiveIndex(index);
