@@ -5,10 +5,9 @@ import { Github, Linkedin, Twitter, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const socials = [
-  { icon: Github, href: 'https://github.com', label: 'GitHub' },
-  { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
-  { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
-  { icon: Mail, href: 'mailto:hello@example.com', label: 'Email' },
+  { icon: Github, href: process.env.GITHUB_URL!, label: 'GitHub' },
+  { icon: Linkedin, href: process.env.LINKEDIN_URL!, label: 'LinkedIn' },
+  { icon: Mail, href: process.env.EMAIL_URL!, label: 'Email' },
 ];
 
 export const FloatingSocials = () => {

@@ -10,10 +10,10 @@ export const Footer = () => {
           © {new Date().getFullYear()} All rights reserved.
         </div>
         <div className="flex items-center gap-6">
-          <a href="#" className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-colors">
+          <a href="https://www.termsfeed.com/live/0126f2e0-5a61-4502-817c-010970cd8e58" className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-colors">
             Privacy
           </a>
-          <a href="#" className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-colors">
+          <a href="https://www.termsfeed.com/live/de51afea-4d68-4a7b-9105-faecdfa641f0" className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-colors">
             Terms
           </a>
         </div>

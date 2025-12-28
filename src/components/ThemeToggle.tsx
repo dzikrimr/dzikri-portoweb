@@ -37,7 +37,7 @@ export const ThemeToggle = () => {
         className={cn(
           "group flex items-center justify-center w-10 h-14 rounded-tl-xl",
           "bg-card/80 backdrop-blur-sm border-l border-t border-border/40",
-          "hover:bg-accent/50 transition-all duration-300",
+          "hover:bg-accent/50 transition-all duration-300 cursor-pointer",
         )}
         aria-label="Toggle theme"
       >

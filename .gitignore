@@ -24,6 +24,9 @@
 .DS_Store
 *.pem
 
+# assets
+/assets
+
 # database
 seed.ts
 

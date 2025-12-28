@@ -5,11 +5,9 @@ import { projects, experiences, achievements } from './schema';
 const seed = async () => {
   console.log('Seeding database...');
 
-
   await db.delete(achievements);
   await db.delete(experiences);
   await db.delete(projects);
-
 
   await db.insert(projects).values([
     {
@@ -75,6 +73,13 @@ const seed = async () => {
       tags: ['Text-to-Speech', 'FastAPI', 'Python', 'AI/ML', 'Indonesian NLP'],
       link: 'https://github.com/yourusername/AksaTTS',
     },
+    {
+      title: 'Sentinel',
+      description: 'A backend API for a blockchain-based warranty management system built to facilitate secure digital warranty creation on the Ethereum Sepolia testnet[cite: 50]. This project integrates Solidity smart contracts for decentralized verification, PostgreSQL with Knex.js for data persistence, and Midtrans for automated payment processing[cite: 51]. Developed as a core backend system for the Blockchain & Digital Financial Platform course.',
+      image: '/assets/sentinel.jpg',
+      tags: ['Blockchain', 'Node.js', 'Solidity', 'Ethereum', 'Midtrans', 'PostgreSQL'],
+      link: 'https://github.com/yourusername/sentinel-api',
+    },
   ]);
 
 
@@ -83,7 +88,7 @@ const seed = async () => {
       year: '2025',
       command: 'lab-assistant',
       title: 'Laboratory Teaching Assistant of Data Structures & Algorithm',
-      company: 'Faculty of Computer Science (FILKOM) University of Brawijaya',
+      company: 'Faculty of Computer Science University of Brawijaya',
       location: 'Malang, Jawa Timur, Indonesia',
       description: 'Assisting students in understanding data structures and algorithms concepts through laboratory sessions.',
       output: [
@@ -98,7 +103,7 @@ const seed = async () => {
       year: '2025',
       command: 'lab-assistant',
       title: 'Laboratory Teaching Assistant of Mobile Device Application Development',
-      company: 'Faculty of Computer Science (FILKOM) University of Brawijaya',
+      company: 'Faculty of Computer Science University of Brawijaya',
       location: 'Malang, Jawa Timur, Indonesia',
       description: 'Assisting students in mobile application development using Android and Kotlin.',
       output: [

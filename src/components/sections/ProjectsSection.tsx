@@ -187,7 +187,7 @@ export const ProjectsSection = () => {
             "flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full",
             "border border-border text-muted-foreground",
             "hover:bg-accent hover:text-foreground transition-all duration-300",
-            "bg-background/90 backdrop-blur-sm hover:scale-110"
+            "bg-background/90 backdrop-blur-sm hover:scale-110 cursor-pointer"
           )}
           data-aos="fade-right"
           data-aos-delay="400"
@@ -202,7 +202,7 @@ export const ProjectsSection = () => {
             "flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full",
             "border border-border text-muted-foreground",
             "hover:bg-accent hover:text-foreground transition-all duration-300",
-            "bg-background/90 backdrop-blur-sm hover:scale-110"
+            "bg-background/90 backdrop-blur-sm hover:scale-110 cursor-pointer"
           )}
           data-aos="fade-left"
           data-aos-delay="400"
@@ -262,7 +262,7 @@ export const ProjectsSection = () => {
                       <DialogTrigger asChild>
                         <Button
                           variant="outline"
-                          className="flex-1 text-[10px] uppercase tracking-wider px-3 py-2 h-auto"
+                          className="flex-1 text-[10px] uppercase tracking-wider px-3 py-2 h-auto cursor-pointer"
                         >
                           View Detail
                         </Button>
@@ -303,7 +303,7 @@ export const ProjectsSection = () => {
                             rel="noopener noreferrer"
                             className={cn(
                               "inline-flex items-center gap-2 text-xs uppercase tracking-wider",
-                              "text-foreground hover:text-gray-300 transition-colors w-full justify-center"
+                              "text-foreground hover:text-gray-300 transition-colors w-full justify-center cursor-pointer"
                             )}
                           >
                             View Project
