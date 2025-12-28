@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import Image from 'next/image';
 import { 
@@ -160,10 +160,44 @@ export const AchievementSection = () => {
                                             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
                                             
                                             <div className={cn(
-                                                "relative flex flex-col gap-2",
+                                                "relative flex flex-col gap-3",
                                                 isEven ? "md:items-end" : "md:items-start"
                                             )}>
-                                                <div className="flex items-center gap-2 mb-1">
+                                                {/* Image placeholder */}
+                                                <div className={cn(
+                                                    "relative w-full h-32 bg-gradient-to-br from-muted/20 to-muted/10 rounded-lg border border-border/50 overflow-hidden group/card",
+                                                    isEven ? "md:w-48" : "md:w-48"
+                                                )}>
+                                                    {item.image ? (
+                                                        <>
+                                                            {imageLoading[item.id] && (
+                                                                <div className="absolute inset-0 flex items-center justify-center">
+                                                                    <div className="animate-pulse bg-gradient-to-r from-muted/20 via-muted/40 to-muted/20 bg-[length:200%_100%] animate-shimmer rounded-lg w-full h-full"></div>
+                                                                </div>
+                                                            )}
+                                                            <Image 
+                                                                src={item.image} 
+                                                                alt={item.title}
+                                                                fill
+                                                                className="object-cover transition-opacity duration-300 group-hover/card:scale-105"
+                                                                style={{ opacity: imageLoading[item.id] ? 0 : 1 }}
+                                                                onLoad={() => handleImageLoad(item.id)}
+                                                                onLoadStart={() => handleImageLoadStart(item.id)}
+                                                            />
+                                                        </>
+                                                    ) : (
+                                                        <div className="absolute inset-0 flex items-center justify-center">
+                                                            <div className="text-center">
+                                                                <div className="w-8 h-8 mx-auto mb-2 rounded-full bg-border/50 flex items-center justify-center">
+                                                                    <Award className="w-4 h-4 text-muted-foreground" />
+                                                                </div>
+                                                                <span className="text-xs text-muted-foreground font-medium">Achievement Image</span>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </div>
+
+                                                <div className="flex items-center gap-2">
                                                     <span className={cn(
                                                         "text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border",
                                                         styles.bg,
@@ -183,7 +217,7 @@ export const AchievementSection = () => {
                                                 <p className="text-sm text-primary/80 font-medium">
                                                     {item.event}
                                                 </p>
-                                                <p className="text-xs text-muted-foreground line-clamp-2 mt-1">
+                                                <p className="text-xs text-muted-foreground line-clamp-2">
                                                     {item.description}
                                                 </p>
                                             </div>
@@ -232,20 +266,34 @@ export const AchievementSection = () => {
                     {selectedAchievement && (
                         <div className="space-y-4">
                             <div className="relative w-full aspect-[16/10] rounded-lg overflow-hidden border border-border/50 bg-muted/20">
-                                {imageLoading[selectedAchievement.id] && (
+                                {selectedAchievement?.image ? (
+                                    <>
+                                        {imageLoading[selectedAchievement.id] && (
+                                            <div className="absolute inset-0 flex items-center justify-center">
+                                                <div className="animate-pulse bg-gradient-to-r from-muted/20 via-muted/40 to-muted/20 bg-[length:200%_100%] animate-shimmer rounded-lg w-full h-full"></div>
+                                            </div>
+                                        )}
+                                        <Image 
+                                            src={selectedAchievement.image} 
+                                            alt={selectedAchievement.title}
+                                            fill
+                                            className="object-cover transition-opacity duration-300"
+                                            style={{ opacity: imageLoading[selectedAchievement.id] ? 0 : 1 }}
+                                            onLoad={() => handleImageLoad(selectedAchievement.id)}
+                                            onLoadStart={() => handleImageLoadStart(selectedAchievement.id)}
+                                        />
+                                    </>
+                                ) : (
                                     <div className="absolute inset-0 flex items-center justify-center">
-                                        <div className="animate-pulse bg-gradient-to-r from-muted/20 via-muted/40 to-muted/20 bg-[length:200%_100%] animate-shimmer rounded-lg w-full h-full"></div>
+                                        <div className="text-center">
+                                            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-border/50 flex items-center justify-center">
+                                                <Award className="w-8 h-8 text-muted-foreground" />
+                                            </div>
+                                            <span className="text-sm text-muted-foreground font-medium">Achievement Image</span>
+                                            <p className="text-xs text-muted-foreground/70 mt-1">Add image to showcase your achievement</p>
+                                        </div>
                                     </div>
                                 )}
-                                <Image 
-                                    src={selectedAchievement.image} 
-                                    alt={selectedAchievement.title}
-                                    fill
-                                    className="object-contain transition-opacity duration-300"
-                                    style={{ opacity: imageLoading[selectedAchievement.id] ? 0 : 1 }}
-                                    onLoad={() => handleImageLoad(selectedAchievement.id)}
-                                    onLoadStart={() => handleImageLoadStart(selectedAchievement.id)}
-                                />
                             </div>
                             
                             <div className="space-y-2">
@@ -264,6 +312,7 @@ export const AchievementSection = () => {
         </section>
     );
 };
+
 
 
 

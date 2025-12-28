@@ -19,6 +19,7 @@ export const experiences = pgTable('experiences', {
   location: text('location').notNull(),
   description: text('description').notNull(),
   output: text('output').array().notNull(),
+  image: text("image"),
   skills: text('skills').array().notNull(),
   createdAt: timestamp('created_at').defaultNow(),
 });

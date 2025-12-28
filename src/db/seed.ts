@@ -78,7 +78,7 @@ const seed = async () => {
   ]);
 
 
-  await db.insert(experiences).values([
+    await db.insert(experiences).values([
     {
       year: '2025',
       command: 'lab-assistant',
@@ -91,6 +91,7 @@ const seed = async () => {
         'Mentored students',
         'Graded assignments',
       ],
+      image: '/assets/project-1.jpg',
       skills: [],
     },
     {
@@ -119,6 +120,7 @@ const seed = async () => {
         'Collaborated in cross-functional team',
         'Delivered high-quality projects',
       ],
+      image: '/assets/project-1.jpg',
       skills: [],
     },
     {
@@ -133,6 +135,7 @@ const seed = async () => {
         'Maintained frontend codebase',
         'Led frontend development team',
       ],
+      image: '/assets/project-1.jpg',
       skills: [],
     },
     {
@@ -147,6 +150,7 @@ const seed = async () => {
         'Participated in team brainstorming',
         'Strengthened Android development skills',
       ],
+      image: '/assets/project-1.jpg',
       skills: [],
     },
   ]);
