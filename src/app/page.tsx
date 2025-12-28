@@ -6,13 +6,13 @@ import 'aos/dist/aos.css';
 import { FloatingNavbar } from '@/components/FloatingNavbar';
 import { FloatingSocials } from '@/components/FloatingSocials';
 import { StarBackground } from '@/components/StarBackground';
-import { HeroSection } from '@/components/HeroSection';
-import { TechStackSection } from '@/components/TechStackSection';
-import { ProjectsCarousel } from '@/components/ProjectsCarousel';
-import { AboutSection } from '@/components/AboutSection';
-import { TimelineSection } from '@/components/TimelineSection';
-import { AchievementSection } from '@/components/AchievementSection';
-import { ContactSection } from '@/components/ContactSection';
+import { HeroSection } from '@/components/sections/HeroSection';
+import { TechStackSection } from '@/components/sections/TechStackSection';
+import { ProjectsSection } from '@/components/sections/ProjectsSection';
+import { AboutSection } from '@/components/sections/AboutSection';
+import { TimelineSection } from '@/components/sections/TimelineSection';
+import { AchievementSection } from '@/components/sections/AchievementSection';
+import { ContactSection } from '@/components/sections/ContactSection';
 import { Footer } from '@/components/Footer';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { MobileMenu } from '@/components/MobileMenu';
@@ -45,9 +45,9 @@ const Index = () => {
       </div>
       <main>
         <HeroSection />
-        <TechStackSection />
-        <ProjectsCarousel />
         <AboutSection />
+        <TechStackSection />
+        <ProjectsSection />
         <TimelineSection />
         <AchievementSection />
         <ContactSection />

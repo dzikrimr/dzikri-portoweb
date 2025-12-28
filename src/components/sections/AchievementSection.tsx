@@ -1,25 +1,25 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import Image from 'next/image';
 import { 
-    Trophy, Medal, Award, Crown, Star, Rocket, 
-    Zap, Code2, Globe, Shield, Target, Sparkles,
-    CheckCircle2, Bookmark
+    Trophy, Medal, Award, Crown, Rocket,
+    CheckCircle2
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { getAchievements } from '@/app/actions';
 import { Achievement as DBAchievement } from '@/db/schema';
 
-// --- TYPES & DATA ---
+
 type AchievementTier = 'gold' | 'silver' | 'bronze' | 'special' | 'default';
 
 interface Achievement extends Omit<DBAchievement, 'tier'> {
     tier: AchievementTier;
 }
 
-// --- HELPER FUNCTIONS ---
+
+
 const getTierStyles = (tier: AchievementTier) => {
     switch (tier) {
         case 'gold':
@@ -74,17 +74,27 @@ const formatDate = (dateString: string) => {
 export const AchievementSection = () => {
     const [achievements, setAchievements] = useState<Achievement[]>([]);
     const [selectedAchievement, setSelectedAchievement] = useState<Achievement | null>(null);
+    const [selectedAchievementId, setSelectedAchievementId] = useState<number | null>(null);
+    const [imageLoading, setImageLoading] = useState<{[key: number]: boolean}>({});
+
+    const handleImageLoad = (id: number) => {
+        setImageLoading(prev => ({ ...prev, [id]: false }));
+    };
+
+    const handleImageLoadStart = (id: number) => {
+        setImageLoading(prev => ({ ...prev, [id]: true }));
+    };
 
     useEffect(() => {
         getAchievements().then((data) => {
-            // Cast the data to match the Achievement interface (tier string -> AchievementTier)
+
             setAchievements(data as unknown as Achievement[]);
         });
     }, []);
 
     return (
-        <section id="achievements" className="relative w-full py-24 flex flex-col items-center overflow-hidden">
-            {/* Background Elements */}
+        <section id="achievements" className="relative w-full py-20 md:py-24 min-h-[50vh] flex flex-col items-center overflow-visible">
+
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/5 via-background to-background pointer-events-none" />
             
             <div className="relative z-10 max-w-4xl mx-auto w-full px-4">
@@ -92,20 +102,20 @@ export const AchievementSection = () => {
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-4">
                         <Rocket className="w-3 h-3 text-primary" />
                         <span className="text-[10px] uppercase tracking-widest text-primary font-semibold">
-                            Career Trajectory
+                            Achievements
                         </span>
                     </div>
                     <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
                         FLIGHT LOGS
                     </h2>
                     <p className="text-sm text-muted-foreground mt-3 max-w-lg mx-auto">
-                        A chronological record of missions, competitions, and recognitions across the galaxy.
+                        A chronological record of competitions across the galaxy.
                     </p>
                 </div>
 
-                {/* TIMELINE CONTAINER */}
+
                 <div className="relative pl-8 md:pl-0">
-                    {/* Vertical Line (Desktop: Center, Mobile: Left) */}
+
                     <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary/30 to-transparent -translate-x-1/2" />
 
                     <div className="space-y-12">
@@ -123,7 +133,7 @@ export const AchievementSection = () => {
                                     data-aos="fade-up"
                                     data-aos-delay={index * 100}
                                 >
-                                    {/* TIMELINE NODE */}
+
                                     <div className="absolute left-0 md:left-1/2 -translate-x-1/2 flex items-center justify-center z-10">
                                         <div className={cn(
                                             "w-12 h-12 rounded-full border-2 bg-background flex items-center justify-center transition-transform duration-300 hover:scale-110",
@@ -134,16 +144,19 @@ export const AchievementSection = () => {
                                         </div>
                                     </div>
 
-                                    {/* CONTENT CARD */}
+
                                     <div className={cn(
                                         "w-full md:w-[calc(50%-3rem)] pl-12 md:pl-0",
                                         isEven ? "md:text-right" : "md:text-left"
                                     )}>
                                         <div 
                                             className="group relative bg-card/40 backdrop-blur-sm border border-border hover:border-primary/50 p-5 rounded-xl cursor-pointer transition-all duration-300 hover:shadow-lg hover:bg-card/60"
-                                            onClick={() => setSelectedAchievement(item)}
+                                            onClick={() => {
+                                                setSelectedAchievement(item);
+                                                setSelectedAchievementId(item.id);
+                                            }}
                                         >
-                                            {/* Hover Glow */}
+
                                             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
                                             
                                             <div className={cn(
@@ -177,7 +190,7 @@ export const AchievementSection = () => {
                                         </div>
                                     </div>
 
-                                    {/* SPACER for the other side */}
+
                                     <div className="hidden md:block w-[calc(50%-3rem)]" />
                                 </div>
                             );
@@ -186,7 +199,12 @@ export const AchievementSection = () => {
                 </div>
             </div>
 
-            <Dialog open={!!selectedAchievement} onOpenChange={(open) => !open && setSelectedAchievement(null)}>
+            <Dialog open={selectedAchievementId !== null} onOpenChange={(open) => {
+                if (!open) {
+                    setSelectedAchievement(null);
+                    setSelectedAchievementId(null);
+                }
+            }}>
                 <DialogContent className="sm:max-w-[500px] bg-background/95 backdrop-blur-xl border-primary/20 text-foreground">
                     <DialogHeader>
                         <div className="flex flex-col items-center text-center mb-4">
@@ -213,12 +231,20 @@ export const AchievementSection = () => {
                     
                     {selectedAchievement && (
                         <div className="space-y-4">
-                            <div className="relative w-full h-48 rounded-lg overflow-hidden border border-border/50">
+                            <div className="relative w-full aspect-[16/10] rounded-lg overflow-hidden border border-border/50 bg-muted/20">
+                                {imageLoading[selectedAchievement.id] && (
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <div className="animate-pulse bg-gradient-to-r from-muted/20 via-muted/40 to-muted/20 bg-[length:200%_100%] animate-shimmer rounded-lg w-full h-full"></div>
+                                    </div>
+                                )}
                                 <Image 
                                     src={selectedAchievement.image} 
                                     alt={selectedAchievement.title}
                                     fill
-                                    className="object-cover"
+                                    className="object-contain transition-opacity duration-300"
+                                    style={{ opacity: imageLoading[selectedAchievement.id] ? 0 : 1 }}
+                                    onLoad={() => handleImageLoad(selectedAchievement.id)}
+                                    onLoadStart={() => handleImageLoadStart(selectedAchievement.id)}
                                 />
                             </div>
                             

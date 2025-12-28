@@ -9,7 +9,7 @@ export async function getProjects() {
 }
 
 export async function getExperiences() {
-  // Sort by year descending. Since year is text, it works for '2023', '2022' etc.
+
   return await db.select().from(experiences).orderBy(desc(experiences.year));
 }
 

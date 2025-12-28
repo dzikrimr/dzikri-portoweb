@@ -101,9 +101,9 @@ const technologies = [
 
 export const TechStackSection = () => {
   return (
-    <section className="py-8 md:py-12">
+    <section id="techstack" className="py-20 md:py-24">
       <div className="max-w-4xl mx-auto px-6">
-        {/* Section Header */}
+
         <div className="text-center mb-12" data-aos="fade-up">
           <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
             Expertise
@@ -116,7 +116,7 @@ export const TechStackSection = () => {
           </p>
         </div>
 
-        {/* Tech Grid */}
+
         <div className="grid grid-cols-4 md:grid-cols-6 gap-6 md:gap-6">
           {technologies.map((tech, index) => (
             <div

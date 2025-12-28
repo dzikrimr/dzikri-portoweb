@@ -5,111 +5,153 @@ import { projects, experiences, achievements } from './schema';
 const seed = async () => {
   console.log('Seeding database...');
 
-  // Clear existing data
+
   await db.delete(achievements);
   await db.delete(experiences);
   await db.delete(projects);
 
-  // Projects
+
   await db.insert(projects).values([
     {
-      title: 'Analytics Dashboard',
-      description: 'A comprehensive data visualization platform with real-time analytics and intuitive user interface.',
-      image: '/assets/project-1.jpg',
-      tags: ['React', 'TypeScript', 'D3.js'],
+      title: 'BabyBloom',
+      description: "A team project that secured 3rd place in the Hology 8.0 software development competition. Helps parents cherish every moment by monitoring their child's growth with the power of computer vision and AI.",
+      image: '/assets/babybloom.jpg',
+      tags: ['Computer Vision', 'AI', 'Mobile App', 'React Native', 'Firebase'],
+      link: 'https://github.com/yourusername/BabyBloom',
+    },
+    {
+      title: 'DailyPlate',
+      description: 'The first application project that I built independently for my internship period was in Raion Community 2023. An app for healthy recipes with Gemini AI-powered.',
+      image: '/assets/dailyplate.jpg',
+      tags: ['AI', 'Gemini API', 'Mobile App', 'React Native', 'Recipe App'],
+      link: 'https://github.com/yourusername/DailyPlate',
+    },
+    {
+      title: 'EcoJourney',
+      description: 'A mobile app built in one week during HackJam 2024. Helps users track carbon footprint and get eco-friendly recommendations with gamified challenges.',
+      image: '/assets/ecojourney.jpg',
+      tags: ['Mobile App', 'React Native', 'Sustainability', 'Gamification', 'Hackathon'],
+      link: 'https://github.com/yourusername/EcoJourney',
+    },
+    {
+      title: 'Logikey',
+      description: 'Intelligent Android Input Method Editor (IME) powered by a fine-tuned Llama-3 8B Instruct model. Unlike standard AI assistants, Logikey is integrated directly into the OS level to detect, label, and provide rebuttals for logical fallacies in real-time as you type in any application.',
+      image: '/assets/logikey.jpg',
+      tags: ['Android', 'LLM', 'Llama-3', 'IME', 'AI/ML', 'Logic'],
+      link: 'https://github.com/yourusername/Logikey',
+    },
+    {
+      title: 'SlotReality',
+      description: 'An award-winning interactive website that secured 2nd place in the Itechnocup 2025 Frontend Development competition. Designed to raise awareness about the dangers of online gambling through an immersive digital experience.',
+      image: '/assets/slotreality.jpg',
+      tags: ['Frontend', 'React', 'Interactive', 'Award Winning', 'Web Development'],
+      link: 'https://github.com/yourusername/SlotReality',
+    },
+    {
+      title: 'PrediAI',
+      description: 'AI-driven healthcare innovation, we build PrediAI, a mobile application designed for non-invasive early screening of diabetes through image analysis of tongue and nail, no needles, no pain. Developed as part of GEMASTIK XVIII, a national software development competition organized by the Ministry of Education, Culture, Research, and Technology (Kemendikbudristek). PrediAI integrates AI-powered image classification based on MobileNetV2 architecture, analyzing visual biomarkers correlated with hyperglycemia such as discoloration and texture changes in the tongue and nails. Built using Jetpack Compose, Firebase, and FastAPI.',
+      image: '/assets/prediai.jpg',
+      tags: ['AI/ML', 'MobileNetV2', 'Jetpack Compose', 'Firebase', 'FastAPI', 'Healthcare', 'Diabetes'],
+      link: 'https://github.com/yourusername/PrediAI',
+    },
+    {
+      title: 'BRIAN by BRI',
+      description: 'BRIan adalah sistem digitalisasi laporan harian untuk divisi Marketing & Relation BRI Malang yang terdiri dari Aplikasi Mobile (karyawan) dan Website Dashboard (supervisor & admin). Sistem ini dirancang untuk menggantikan proses pelaporan manual melalui WhatsApp yang selama ini tidak terstandarisasi, sulit ditelusuri, dan tidak menyediakan insight performa operasional. BRIan menyediakan alur pelaporan yang terstruktur, tervalidasi, dan dapat dianalisis, sehingga karyawan dapat mengirim laporan kunjungan secara cepat dan akurat, sementara supervisor dapat melakukan validasi dan monitoring aktivitas secara real-time melalui dashboard.',
+      image: '/assets/brian.jpg',
+      tags: ['Mobile App', 'Web Dashboard', 'React Native', 'Next.js', 'Corporate', 'Reporting System'],
       link: '#',
     },
     {
-      title: 'Luxury E-Commerce',
-      description: 'Premium shopping experience for high-end fashion brands with seamless checkout flow.',
-      image: '/assets/project-2.jpg',
-      tags: ['Next.js', 'Stripe', 'Prisma'],
-      link: '#',
+      title: 'Baby Vision AI',
+      description: "An intelligent detection system for baby monitoring using computer vision and MediaPipe. This project is designed to help parents monitor their baby's condition in real-time with various detection features including Eye Detection, Mouth Detection, Movement Detection, Pacifier Detection, Rollover Detection, and Enhanced Frame.",
+      image: '/assets/baby-vision-ai.jpg',
+      tags: ['Computer Vision', 'MediaPipe', 'Python', 'OpenCV', 'AI/ML'],
+      link: 'https://github.com/yourusername/BabyVisionAI',
     },
     {
-      title: 'Creative Agency',
-      description: 'Bold and expressive portfolio website featuring dynamic animations and immersive storytelling.',
-      image: '/assets/project-3.jpg',
-      tags: ['React', 'GSAP', 'Three.js'],
-      link: '#',
+      title: 'Aksa TTS',
+      description: 'A powerful Indonesian Text-to-Speech system with support for various regional accents. Built on top of the Chatterbox-TTS framework, it provides high-quality speech synthesis with voice cloning capabilities, allowing users to generate speech in different Indonesian regional accents.',
+      image: '/assets/aksa-tts.jpg',
+      tags: ['Text-to-Speech', 'FastAPI', 'Python', 'AI/ML', 'Indonesian NLP'],
+      link: 'https://github.com/yourusername/AksaTTS',
     },
   ]);
 
-  // Experiences
+
   await db.insert(experiences).values([
     {
+      year: '2025',
+      command: 'lab-assistant',
+      title: 'Laboratory Teaching Assistant of Data Structures & Algorithm',
+      company: 'Faculty of Computer Science (FILKOM) University of Brawijaya',
+      location: 'Malang, Jawa Timur, Indonesia',
+      description: 'Assisting students in understanding data structures and algorithms concepts through laboratory sessions.',
+      output: [
+        'Conducted laboratory sessions',
+        'Mentored students',
+        'Graded assignments',
+      ],
+      skills: [],
+    },
+    {
+      year: '2025',
+      command: 'lab-assistant',
+      title: 'Laboratory Teaching Assistant of Mobile Device Application Development',
+      company: 'Faculty of Computer Science (FILKOM) University of Brawijaya',
+      location: 'Malang, Jawa Timur, Indonesia',
+      description: 'Assisting students in mobile application development using Android and Kotlin.',
+      output: [
+        'Conducted laboratory sessions',
+        'Mentored students',
+        'Graded assignments',
+      ],
+      skills: [],
+    },
+    {
       year: '2023',
-      command: 'senior-developer',
-      title: 'Senior Developer',
-      company: 'Tech Innovations Inc.',
-      location: 'San Francisco, CA',
-      description: 'Leading frontend architecture and mentoring junior developers. Building scalable design systems and driving technical decisions across multiple product teams.',
+      command: 'mobile-dev',
+      title: 'Mobile Developer',
+      company: 'Raion Community',
+      location: 'Kota Malang, Jawa Timur, Indonesia',
+      description: 'Selected as Programmer Apps in RAION Community after internship. Developed Android mobile applications with focus on user-centered features. Collaborated effectively in a cross-functional team to deliver high-quality projects.',
       output: [
-        'Led team of 8 engineers',
-        'Shipped 12 major features',
-        'Reduced load time by 40%',
+        'Developed Android applications',
+        'Collaborated in cross-functional team',
+        'Delivered high-quality projects',
       ],
-      skills: ['React', 'TypeScript', 'System Design', 'Leadership'],
+      skills: [],
     },
     {
-      year: '2022',
-      command: 'lead-engineer',
-      title: 'Lead Engineer',
-      company: 'Digital Products Co.',
-      location: 'New York, NY',
-      description: 'Spearheaded product development for fintech solutions. Managed cross-functional teams and delivered enterprise-grade applications.',
-      output: [
-        'Managed $2M project budget',
-        'Built payment processing system',
-        'Achieved 99.9% uptime',
-      ],
-      skills: ['Node.js', 'AWS', 'PostgreSQL', 'Team Lead'],
-    },
-    {
-      year: '2021',
-      command: 'fullstack-dev',
-      title: 'Full Stack Developer',
-      company: 'Digital Agency Co.',
-      location: 'Austin, TX',
-      description: 'Built scalable applications for enterprise clients. Implemented CI/CD pipelines and optimized database performance for high-traffic systems.',
-      output: [
-        'Delivered 20+ client projects',
-        'Automated deployment pipeline',
-        'Improved API response by 60%',
-      ],
-      skills: ['Full Stack', 'Docker', 'CI/CD', 'MongoDB'],
-    },
-    {
-      year: '2019',
+      year: '2025',
       command: 'frontend-dev',
-      title: 'Frontend Developer',
-      company: 'Startup Labs',
-      location: 'Remote',
-      description: 'Developed user interfaces for early-stage products. Collaborated closely with designers to ship pixel-perfect, accessible experiences.',
+      title: 'Frontend Web Developer',
+      company: 'Raion Community',
+      location: 'Kota Malang, Jawa Timur, Indonesia',
+      description: 'Lead Raion Craft Frontend at the Innovation & Technology Unit, responsible for developing and maintaining user-facing web interfaces.',
       output: [
-        'Built 5 MVPs from scratch',
-        'Established component library',
-        'Improved accessibility score to 98',
+        'Developed web interfaces',
+        'Maintained frontend codebase',
+        'Led frontend development team',
       ],
-      skills: ['React', 'CSS', 'Figma', 'A11y'],
+      skills: [],
     },
     {
-      year: '2018',
-      command: 'init',
-      title: 'Junior Developer',
-      company: 'Web Solutions',
-      location: 'Boston, MA',
-      description: 'Started journey in web development and design. Learned fundamentals of modern JavaScript, responsive design, and version control.',
+      year: '2023',
+      command: 'intern',
+      title: 'Mobile Developer (Intern)',
+      company: 'Raion Community',
+      location: 'Kota Malang, Jawa Timur, Indonesia',
+      description: 'Contributed to the design and development of an Android application. Engaged in team brainstorming and concept formulation for real-world solutions. Strengthened skills in Android development and collaborative workflows.',
       output: [
-        'Completed 100+ code reviews',
-        'First production deployment',
-        'Mentored by senior engineers',
+        'Contributed to Android app development',
+        'Participated in team brainstorming',
+        'Strengthened Android development skills',
       ],
-      skills: ['JavaScript', 'HTML/CSS', 'Git', 'Agile'],
+      skills: [],
     },
   ]);
 
-  // Achievements
+
   await db.insert(achievements).values([
     {
       title: "2nd Winner ITechnoCup Front End Dev",

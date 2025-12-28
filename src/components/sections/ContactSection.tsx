@@ -140,8 +140,8 @@ export const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="relative py-24 px-4">
-      {/* Section Header */}
+    <section id="contact" className="relative py-20 md:py-24 px-4">
+
       <div className="pb-12">
         <div className="text-center" data-aos="fade-up">
           <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
@@ -156,30 +156,30 @@ export const ContactSection = () => {
         </div>
       </div>
 
-      {/* Phone Container - centered and fully visible */}
+
       <div className="flex justify-center">
-        {/* Android Phone Frame - scaled to fit */}
+
         <div
           className="relative w-[280px] sm:w-[320px] md:w-[340px]"
           data-aos="fade-up"
           data-aos-delay="100"
           style={{ height: "580px" }}
         >
-          {/* Phone outer frame */}
+
           <div className="relative h-full rounded-[2.5rem] border-[12px] border-foreground/90 bg-background shadow-[0_20px_60px_-15px_rgba(0,0,0,0.4)]">
-            {/* Phone inner bezel */}
+
             <div className="relative h-full rounded-[2rem] overflow-hidden bg-card/50 flex flex-col">
-              {/* Status bar with hole punch camera */}
+
               <div className="relative h-10 bg-card/80 flex items-center justify-center px-5 shrink-0">
-                {/* Hole punch camera - centered */}
+
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-foreground/20 border-2 border-foreground/30">
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-foreground/50" />
                 </div>
-                {/* Time */}
+
                 <span className="text-[10px] text-muted-foreground absolute left-5">
                   {currentTime}
                 </span>
-                {/* Status icons */}
+
                 <div className="flex items-center gap-2 absolute right-5">
                   <div className="flex items-end gap-0.5">
                     <div className="w-0.5 h-1   bg-muted-foreground/30 rounded-sm" />
@@ -193,7 +193,7 @@ export const ContactSection = () => {
                 </div>
               </div>
 
-              {/* Chat Header */}
+
               <div className="px-5 py-4 border-b border-border/30 bg-card/50 flex items-center gap-4 shrink-0">
                 <div className="w-10 h-10 rounded-full bg-accent/50 flex items-center justify-center">
                   <span className="text-xs text-foreground/70">DM</span>
@@ -212,7 +212,7 @@ export const ContactSection = () => {
                 )}
               </div>
 
-              {/* Messages */}
+
               <div className="flex-1 overflow-y-auto p-5 space-y-4 scrollbar-hide bg-background/30">
                 {messages.map((msg, index) => (
                   <div
@@ -248,7 +248,7 @@ export const ContactSection = () => {
                   </div>
                 ))}
 
-                {/* Typing indicator */}
+
                 {isTyping && (
                   <div className="flex justify-start">
                     <div className="bg-accent/40 rounded-2xl rounded-bl-sm px-5 py-3">
@@ -270,7 +270,7 @@ export const ContactSection = () => {
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* Input Bar */}
+
               <div className="p-4 border-t border-border/30 bg-card/40 shrink-0">
                 {step !== "done" ? (
                   <div className="flex items-center gap-3">
@@ -301,7 +301,7 @@ export const ContactSection = () => {
                       aria-label="Kirim pesan"
                     >
                       {inputValue.trim() ? (
-                        // SVG aktif
+
                         <svg
                           width="20"
                           height="20"
@@ -314,7 +314,7 @@ export const ContactSection = () => {
                           <path d="M10.11 14.4C9.92005 14.4 9.73005 14.33 9.58005 14.18C9.29005 13.89 9.29005 13.41 9.58005 13.12L13.16 9.53C13.45 9.24 13.93 9.24 14.22 9.53C14.51 9.82 14.51 10.3 14.22 10.59L10.64 14.18C10.5 14.33 10.3 14.4 10.11 14.4Z" />
                         </svg>
                       ) : (
-                        // SVG disabled
+
                         <svg
                           width="20"
                           height="20"
@@ -336,7 +336,7 @@ export const ContactSection = () => {
                 )}
               </div>
 
-              {/* Navigation bar */}
+
               <div className="h-8 bg-card/60 flex items-center justify-center shrink-0">
                 <div className="w-28 h-1.5 rounded-full bg-foreground/30" />
               </div>

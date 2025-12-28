@@ -14,6 +14,11 @@ export const StarBackground = () => {
 
     let animationFrameId: number;
     let stars: { x: number; y: number; size: number; opacity: number; speed: number; twinkleSpeed: number; twinklePhase: number }[] = [];
+    let isScrolling = false;
+    let scrollTimeout: NodeJS.Timeout;
+    let mouseX = 0;
+    let mouseY = 0;
+    let mouseInfluence = 100;
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -38,25 +43,69 @@ export const StarBackground = () => {
       }
     };
 
+    const handleScroll = () => {
+      isScrolling = true;
+
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+      }, 150);
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    };
+
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+      const speedMultiplier = isScrolling ? 3 : 1;
+
       stars.forEach((star) => {
-        // Update twinkle
+
         star.twinklePhase += star.twinkleSpeed;
         const twinkle = Math.sin(star.twinklePhase) * 0.3 + 0.7;
         
-        // Slow drift upward
-        star.y -= star.speed;
+
+        star.y -= star.speed * speedMultiplier;
         if (star.y < -10) {
           star.y = canvas.height + 10;
           star.x = Math.random() * canvas.width;
         }
 
-        // Draw star
+
+        const dx = star.x - mouseX;
+        const dy = star.y - mouseY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+
+        let glowEffect = 0;
+        if (distance < mouseInfluence) {
+          glowEffect = 1 - (distance / mouseInfluence);
+        }
+
+
+        const currentSize = star.size + (glowEffect * 2);
+        const currentOpacity = star.opacity * twinkle + (glowEffect * 0.5);
+
+
+        if (glowEffect > 0) {
+          const gradient = ctx.createRadialGradient(star.x, star.y, 0, star.x, star.y, currentSize * 5);
+          gradient.addColorStop(0, `rgba(255, 255, 255, ${currentOpacity})`);
+          gradient.addColorStop(0.5, `rgba(255, 255, 255, ${currentOpacity * 0.5})`);
+          gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
+
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, currentSize * 5, 0, Math.PI * 2);
+          ctx.fillStyle = gradient;
+          ctx.fill();
+        }
+
+
         ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity * twinkle})`;
+        ctx.arc(star.x, star.y, currentSize, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${currentOpacity})`;
         ctx.fill();
       });
 
@@ -67,17 +116,22 @@ export const StarBackground = () => {
     animate();
 
     window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('mousemove', handleMouseMove);
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationFrameId);
+      clearTimeout(scrollTimeout);
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0"
+      className="fixed inset-0 z-0"
       style={{ opacity: 0.6 }}
     />
   );
