@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight, ExternalLink, Grid, Image as ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
 import { getProjects } from "@/app/actions";
 import { Project } from "@/db/schema";
 import {
@@ -405,10 +406,10 @@ export const ProjectsSection = () => {
                           </div>
                         </ScrollArea>
                         <div className="p-6 border-t border-border">
-                          <a
-                            href={project.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                          <Link
+                            href={project.link && project.link !== '#' ? project.link : '/private-repo'}
+                            target={project.link && project.link !== '#' ? "_blank" : "_self"}
+                            rel={project.link && project.link !== '#' ? "noopener noreferrer" : undefined}
                             className={cn(
                               "inline-flex items-center gap-2 text-xs uppercase tracking-wider",
                               "text-foreground hover:text-gray-300 transition-colors w-full justify-center cursor-pointer"
@@ -416,19 +417,21 @@ export const ProjectsSection = () => {
                           >
                             View Project
                             <ExternalLink className="w-3 h-3" />
-                          </a>
+                          </Link>
                         </div>
                       </DialogContent>
                     </Dialog>
-                    <a
-                      href={project.link}
+                    <Link
+                      href={project.link && project.link !== '#' ? project.link : '/private-repo'}
+                      target={project.link && project.link !== '#' ? "_blank" : "_self"}
+                      rel={project.link && project.link !== '#' ? "noopener noreferrer" : undefined}
                       className={cn(
                         "inline-flex items-center justify-center gap-1.5 text-[10px] uppercase tracking-wider px-3 py-2",
                         "text-foreground hover:text-gray-300 transition-colors border border-border rounded-md hover:bg-accent"
                       )}
                     >
                       <ExternalLink className="w-3 h-3" />
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
