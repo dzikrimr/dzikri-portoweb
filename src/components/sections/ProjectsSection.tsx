@@ -146,6 +146,10 @@ export const ProjectsSection = () => {
 
     const absDiff = Math.abs(adjustedDiff);
     const isCrossing = absDiff > projects.length / 2 - 0.1;
+    
+    // Performance optimization: Only animate items within range 2 of current index
+    const shouldAnimate = absDiff <= 2;
+    const isFarAway = absDiff > 3;
 
     let translateX = adjustedDiff * 320;
     let scale = 1;
@@ -179,20 +183,28 @@ export const ProjectsSection = () => {
       translateX = adjustedDiff * 200;
     }
 
+    // Simplified transitions for performance
+    let transition = "none";
+    if (!isFarAway && shouldAnimate) {
+      if (isCrossing) {
+        transition = "opacity 300ms ease-in-out";
+      } else {
+        transition = "transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 600ms ease, filter 600ms ease";
+      }
+    }
+
     return {
       transform: `translateX(${translateX}px) scale(${scale}) rotateY(${rotateY}deg)`,
       opacity: isCrossing ? 0 : opacity,
       zIndex,
       filter: blur > 0 ? `blur(${blur}px)` : "none",
-      transition: isCrossing
-        ? "opacity 300ms ease-in-out" 
-        : "transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 600ms ease, filter 600ms ease",
+      transition,
 
       pointerEvents: (adjustedDiff === 0
         ? "auto"
         : "none") as React.CSSProperties["pointerEvents"],
       backfaceVisibility: "hidden" as const,
-      willChange: "transform, opacity",
+      willChange: shouldAnimate ? "transform, opacity" : "auto",
     };
   };
 
@@ -267,7 +279,7 @@ export const ProjectsSection = () => {
           {projects.map((project, index) => (
             <div
               key={project.id}
-              className="absolute w-[260px] md:w-[320px] transition-all duration-500 ease-out preserve-3d"
+              className="absolute w-[260px] md:w-[320px] preserve-3d"
               style={getCardStyle(index)}
             >
               <div className="glass-card overflow-hidden flex flex-col h-full">
@@ -445,7 +457,7 @@ export const ProjectsSection = () => {
                 key={index}
                 onClick={() => setCurrentIndex(index)}
                 className={cn(
-                  "h-1 rounded-full transition-all duration-300",
+                  "h-1 rounded-full transition-colors duration-200",
                   index === currentIndex
                     ? "w-8 bg-foreground"
                     : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
