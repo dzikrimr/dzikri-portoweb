@@ -57,7 +57,7 @@ const seed = async () => {
       description: 'BRIan adalah sistem digitalisasi laporan harian untuk divisi Marketing & Relation BRI Malang yang terdiri dari Aplikasi Mobile (karyawan) dan Website Dashboard (supervisor & admin). Sistem ini dirancang untuk menggantikan proses pelaporan manual melalui WhatsApp yang selama ini tidak terstandarisasi, sulit ditelusuri, dan tidak menyediakan insight performa operasional. BRIan menyediakan alur pelaporan yang terstruktur, tervalidasi, dan dapat dianalisis, sehingga karyawan dapat mengirim laporan kunjungan secara cepat dan akurat, sementara supervisor dapat melakukan validasi dan monitoring aktivitas secara real-time melalui dashboard.',
       images: ['/assets/brian.jpg'],
       tags: ['Mobile App', 'Web Dashboard', 'React Native', 'Next.js', 'Corporate', 'Reporting System'],
-      link: '#',
+      link: null,
     },
     {
       title: 'Baby Vision AI',
