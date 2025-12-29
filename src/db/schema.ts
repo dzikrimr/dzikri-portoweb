@@ -4,7 +4,7 @@ export const projects = pgTable('projects', {
   id: serial('id').primaryKey(),
   title: text('title').notNull(),
   description: text('description').notNull(),
-  image: text('image').notNull(),
+  images: text('images').array(), // Nullable temporarily for migration
   tags: text('tags').array().notNull(),
   link: text('link').notNull(),
   createdAt: timestamp('created_at').defaultNow(),

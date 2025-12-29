@@ -29,6 +29,7 @@
 
 # database
 seed.ts
+/drizzle
 
 # debug
 npm-debug.log*

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { ChevronLeft, ChevronRight, ExternalLink, Grid } from "lucide-react";
+import { ChevronLeft, ChevronRight, ExternalLink, Grid, Image as ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { getProjects } from "@/app/actions";
@@ -21,7 +21,20 @@ export const ProjectsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
+
+  // Helper function to get all images for a project
+  const getAllImages = (project: Project) => {
+    return project.images || [];
+  };
+
+  // Helper function to get the primary image (first image or fallback)
+  const getPrimaryImage = (project: Project) => {
+    const images = getAllImages(project);
+    return images.length > 0 ? images[0] : '/file.svg';
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +47,36 @@ export const ProjectsSection = () => {
     };
     fetchData();
   }, []);
+
+  // Keyboard navigation for modal images
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!selectedProject) return;
+      
+      const allImages = getAllImages(selectedProject);
+      if (allImages.length <= 1) return;
+
+      switch (event.key) {
+        case 'ArrowLeft':
+          event.preventDefault();
+          setCurrentImageIndex(prev => 
+            prev === 0 ? allImages.length - 1 : prev - 1
+          );
+          break;
+        case 'ArrowRight':
+          event.preventDefault();
+          setCurrentImageIndex(prev => 
+            prev === allImages.length - 1 ? 0 : prev + 1
+          );
+          break;
+      }
+    };
+
+    if (selectedProject) {
+      document.addEventListener('keydown', handleKeyDown);
+      return () => document.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [selectedProject]);
 
   const goToNext = () => {
     setCurrentIndex((prev) => {
@@ -230,12 +273,18 @@ export const ProjectsSection = () => {
 
                 <div className="relative h-36 md:h-40 flex-shrink-0 overflow-hidden">
                   <Image
-                    src={project.image}
+                    src={getPrimaryImage(project)}
                     alt={project.title}
                     fill
                     className="object-cover"
                     style={{ filter: "grayscale(30%)" }}
                   />
+                  {getAllImages(project).length > 1 && (
+                    <div className="absolute top-2 right-2 flex items-center gap-1 bg-black/50 backdrop-blur-sm rounded-full px-2 py-1">
+                      <ImageIcon className="w-3 h-3 text-white" />
+                      <span className="text-xs text-white font-medium">{getAllImages(project).length}</span>
+                    </div>
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
                 </div>
 
@@ -258,43 +307,102 @@ export const ProjectsSection = () => {
                     {truncateText(project.description, 100)}
                   </p>
                   <div className="flex gap-2">
-                    <Dialog>
+                    <Dialog onOpenChange={(open) => {
+                      if (!open) {
+                        setSelectedProject(null);
+                        setCurrentImageIndex(0);
+                      }
+                    }}>
                       <DialogTrigger asChild>
                         <Button
                           variant="outline"
                           className="flex-1 text-[10px] uppercase tracking-wider px-3 py-2 h-auto cursor-pointer"
+                          onClick={() => {
+                            setSelectedProject(project);
+                            setCurrentImageIndex(0);
+                          }}
                         >
                           View Detail
                         </Button>
                       </DialogTrigger>
-                      <DialogContent className="max-w-2xl p-0 bg-background/95 backdrop-blur-xl border-border">
+                      <DialogContent className="max-w-4xl p-0 bg-background/95 backdrop-blur-xl border-border">
                         <DialogHeader className="p-6 border-b border-border">
                           <DialogTitle className="text-2xl font-bold tracking-tight">
                             {project.title}
                           </DialogTitle>
                         </DialogHeader>
-                        <ScrollArea className="max-h-[60vh] p-6">
-                          <div className="relative h-64 mb-6 rounded-lg overflow-hidden">
-                            <Image
-                              src={project.image}
-                              alt={project.title}
-                              fill
-                              className="object-cover"
-                            />
+                        <ScrollArea className="max-h-[70vh]">
+                          <div className="p-6 pt-0">
+                            {/* Image Gallery */}
+                            <div className="relative mb-6">
+                              <div className="relative h-64 md:h-80 rounded-lg overflow-hidden bg-muted">
+                                {getAllImages(project).length > 0 ? (
+                                  <Image
+                                    src={getAllImages(project)[currentImageIndex]}
+                                    alt={`${project.title} - Image ${currentImageIndex + 1}`}
+                                    fill
+                                    className="object-cover"
+                                  />
+                                ) : (
+                                  <div className="w-full h-full flex items-center justify-center bg-muted">
+                                    <ImageIcon className="w-16 h-16 text-muted-foreground" />
+                                  </div>
+                                )}
+                                
+                                {/* Image Navigation */}
+                                {getAllImages(project).length > 1 && (
+                                  <>
+                                    <button
+                                      onClick={() => setCurrentImageIndex(prev => 
+                                        prev === 0 ? getAllImages(project).length - 1 : prev - 1
+                                      )}
+                                      className="absolute left-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm text-white hover:bg-black/70 transition-colors"
+                                    >
+                                      <ChevronLeft className="w-4 h-4" />
+                                    </button>
+                                    <button
+                                      onClick={() => setCurrentImageIndex(prev => 
+                                        prev === getAllImages(project).length - 1 ? 0 : prev + 1
+                                      )}
+                                      className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm text-white hover:bg-black/70 transition-colors"
+                                    >
+                                      <ChevronRight className="w-4 h-4" />
+                                    </button>
+                                    
+                                    {/* Image Indicators */}
+                                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1">
+                                      {getAllImages(project).map((_, index) => (
+                                        <button
+                                          key={index}
+                                          onClick={() => setCurrentImageIndex(index)}
+                                          className={cn(
+                                            "w-2 h-2 rounded-full transition-all",
+                                            index === currentImageIndex
+                                              ? "bg-white"
+                                              : "bg-white/50 hover:bg-white/70"
+                                          )}
+                                        />
+                                      ))}
+                                    </div>
+                                  </>
+                                )}
+                              </div>
+                            </div>
+                            
+                            <div className="flex flex-wrap gap-2 mb-4">
+                              {project.tags.map((tag) => (
+                                <span
+                                  key={tag}
+                                  className="px-3 py-1 text-xs uppercase tracking-wider bg-accent/60 rounded text-foreground"
+                                >
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                              {project.description}
+                            </p>
                           </div>
-                          <div className="flex flex-wrap gap-2 mb-4">
-                            {project.tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className="px-3 py-1 text-xs uppercase tracking-wider bg-accent/60 rounded text-foreground"
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                          <p className="text-sm text-muted-foreground leading-relaxed">
-                            {project.description}
-                          </p>
                         </ScrollArea>
                         <div className="p-6 border-t border-border">
                           <a
